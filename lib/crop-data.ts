@@ -10,7 +10,6 @@ export interface Crop {
   priceUnit: string
   timeToHarvest: string
   estimatedYield: string
-  difficulty: "Easy" | "Medium" | "Hard"
   description: string
   guide: {
     soilPreparation: string
@@ -37,7 +36,6 @@ export const crops: Crop[] = [
     priceUnit: "per kg",
     timeToHarvest: "120-150 days",
     estimatedYield: "3-5 tonnes/hectare",
-    difficulty: "Easy",
     description: "Wheat is a staple cereal grain grown worldwide. It thrives in temperate climates and is essential for bread, pasta, and many food products.",
     guide: {
       soilPreparation: "Prepare the field by deep plowing (20-25 cm) followed by 2-3 harrowings. Ensure good drainage and remove weeds. Apply well-decomposed farmyard manure (10-12 tonnes/hectare) 15-20 days before sowing.",
@@ -62,7 +60,6 @@ export const crops: Crop[] = [
     priceUnit: "per kg",
     timeToHarvest: "100-150 days",
     estimatedYield: "4-6 tonnes/hectare",
-    difficulty: "Medium",
     description: "Rice is a primary food source for more than half the world's population. It grows best in warm, humid conditions with abundant water supply.",
     guide: {
       soilPreparation: "Puddle the field by flooding and plowing 2-3 times. Level the field properly for uniform water distribution. Apply 10-15 tonnes of farmyard manure during land preparation.",
@@ -87,7 +84,6 @@ export const crops: Crop[] = [
     priceUnit: "per kg",
     timeToHarvest: "60-90 days",
     estimatedYield: "25-30 tonnes/hectare",
-    difficulty: "Medium",
     description: "Tomatoes are versatile vegetables used fresh and processed. They are rich in vitamins and antioxidants, making them valuable both nutritionally and commercially.",
     guide: {
       soilPreparation: "Deep plow the field and mix 20-25 tonnes of well-rotted farmyard manure. Form raised beds or ridges for good drainage. Soil pH should be 6.0-7.0.",
@@ -112,7 +108,6 @@ export const crops: Crop[] = [
     priceUnit: "per kg",
     timeToHarvest: "150-180 days",
     estimatedYield: "15-20 quintals/hectare",
-    difficulty: "Hard",
     description: "Cotton is a major cash crop providing raw material for the textile industry. It requires careful management but offers good returns for experienced farmers.",
     guide: {
       soilPreparation: "Deep plow during summer to break hard pans. Apply 10-15 tonnes FYM. Form ridges and furrows at 90-120 cm apart. Ensure proper drainage to prevent waterlogging.",
@@ -137,7 +132,6 @@ export const crops: Crop[] = [
     priceUnit: "per kg",
     timeToHarvest: "75-120 days",
     estimatedYield: "25-35 tonnes/hectare",
-    difficulty: "Easy",
     description: "Potatoes are versatile vegetables with high demand. They are relatively easy to grow and provide good yields with proper care and management.",
     guide: {
       soilPreparation: "Deep plow and harrow 3-4 times for fine tilth. Add 25-30 tonnes FYM during field preparation. Form ridges 60 cm apart and 15-20 cm high.",
@@ -162,7 +156,6 @@ export const crops: Crop[] = [
     priceUnit: "per kg",
     timeToHarvest: "10-14 months",
     estimatedYield: "80-100 tonnes/hectare",
-    difficulty: "Medium",
     description: "Sugarcane is a major commercial crop for sugar production. It requires intensive management but provides high returns and supports rural livelihoods.",
     guide: {
       soilPreparation: "Deep plow (30-40 cm) followed by 2-3 harrowings. Form furrows 75-90 cm apart and 20-25 cm deep. Apply 25-30 tonnes FYM before last plowing.",
@@ -187,7 +180,6 @@ export const crops: Crop[] = [
     priceUnit: "per kg",
     timeToHarvest: "90-150 days",
     estimatedYield: "20-25 tonnes/hectare",
-    difficulty: "Medium",
     description: "Onions are essential culinary vegetables with year-round demand. They have good storage potential and can be grown in different seasons for continuous supply.",
     guide: {
       soilPreparation: "Prepare fine tilth by plowing and harrowing. Add 15-20 tonnes FYM. Form raised beds (1.2m wide) or flat beds. Soil pH should be 6.0-7.5.",
@@ -212,7 +204,6 @@ export const crops: Crop[] = [
     priceUnit: "per kg",
     timeToHarvest: "80-110 days",
     estimatedYield: "4-8 tonnes/hectare",
-    difficulty: "Easy",
     description: "Maize is a versatile cereal used for food, feed, and industrial purposes. It adapts to various climates and provides quick returns with proper management.",
     guide: {
       soilPreparation: "Plow field 2-3 times to achieve good tilth. Apply 10-15 tonnes FYM during land preparation. Form ridges 60-75 cm apart for better drainage and root development.",

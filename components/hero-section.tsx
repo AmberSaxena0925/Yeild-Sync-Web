@@ -61,42 +61,34 @@ export function HeroSection() {
               </div>
             </div>
 
-            {/* Right Cards */}
+            {/* Right Cards — 2×2 grid, all cards at the same vertical alignment */}
             <div className="grid grid-cols-2 gap-4">
 
-              <div className="space-y-4">
+              <FeatureCard
+                icon={<BookOpen className="h-6 w-6" />}
+                title="Growing Guides"
+                description="Step-by-step instructions for every crop"
+              />
 
-                <FeatureCard
-                  icon={<BookOpen className="h-6 w-6" />}
-                  title="Growing Guides"
-                  description="Step-by-step instructions for every crop"
-                />
+              <FeatureCard
+                icon={<TrendingUp className="h-6 w-6" />}
+                title="Market Prices"
+                description="Real-time pricing and trends"
+                highlighted
+              />
 
-                <FeatureCard
-                  icon={<CloudSun className="h-6 w-6" />}
-                  title="Weather Smart"
-                  description="Crop recommendations based on weather"
-                  highlighted
-                />
+              <FeatureCard
+                icon={<CloudSun className="h-6 w-6" />}
+                title="Weather Smart"
+                description="Crop recommendations based on weather"
+                highlighted
+              />
 
-              </div>
-
-              <div className="space-y-4 pt-8">
-
-                <FeatureCard
-                  icon={<TrendingUp className="h-6 w-6" />}
-                  title="Market Prices"
-                  description="Real-time pricing and trends"
-                  highlighted
-                />
-
-                <FeatureCard
-                  icon={<Leaf className="h-6 w-6" />}
-                  title="Expert Advice"
-                  description="Best practices from farming experts"
-                />
-
-              </div>
+              <FeatureCard
+                icon={<Leaf className="h-6 w-6" />}
+                title="Expert Advice"
+                description="Best practices from farming experts"
+              />
 
             </div>
 
@@ -122,10 +114,10 @@ function FeatureCard({
 }) {
   return (
     <div
-      className={`rounded-xl border p-5 transition-all ${
+      className={`rounded-xl border p-5 transition-all cursor-pointer ${
         highlighted
-          ? "border-green-600 bg-green-600 text-white shadow-lg"
-          : "border-green-200 bg-white/80 backdrop-blur-md hover:border-green-400 hover:shadow-md"
+          ? "border-green-600 bg-green-600 text-white shadow-lg hover:shadow-xl hover:scale-105 hover:-translate-y-1"
+          : "border-green-200 bg-white/80 backdrop-blur-md hover:border-green-400 hover:shadow-md hover:scale-105 hover:-translate-y-1"
       }`}
     >
       <div className={`mb-3 ${highlighted ? "text-white" : "text-green-600"}`}>
