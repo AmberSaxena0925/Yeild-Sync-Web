@@ -3,14 +3,19 @@
 import Link from "next/link"
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
-import { Menu, X, Leaf } from "lucide-react"
+import { Badge } from "@/components/ui/badge"
+import { useCart } from "@/lib/cart-context"
+import { CartSidebar } from "@/components/cart-sidebar"
+import { Menu, X, Leaf, ShoppingCart } from "lucide-react"
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const { getTotalItems, toggleCart } = useCart()
 
   const navLinks = [
     { href: "/", label: "Home" },
     { href: "/crops", label: "Crop Types" },
+    { href: "/shop", label: "Shop" },
     { href: "/weather", label: "Weather" },
     { href: "/market", label: "Market Prices" },
     { href: "/chat", label: "AI Assistant" },
@@ -41,6 +46,14 @@ export function Header() {
         </nav>
 
         <div className="hidden items-center gap-3 md:flex">
+          <Button variant="ghost" size="sm" onClick={toggleCart} className="relative">
+            <ShoppingCart className="h-5 w-5" />
+            {getTotalItems() > 0 && (
+              <Badge className="absolute -top-1 -right-1 h-5 w-5 rounded-full p-0 text-xs">
+                {getTotalItems()}
+              </Badge>
+            )}
+          </Button>
           <Button variant="outline" size="sm" asChild>
             <Link href="/login">
               Login
@@ -74,6 +87,10 @@ export function Header() {
               </Link>
             ))}
             <div className="mt-2 flex flex-col gap-2">
+              <Button variant="outline" onClick={toggleCart} className="w-full justify-start">
+                <ShoppingCart className="mr-2 h-4 w-4" />
+                Cart ({getTotalItems()})
+              </Button>
               <Button variant="outline" asChild className="w-full">
                 <Link href="/login">
                   Login
@@ -86,6 +103,8 @@ export function Header() {
           </nav>
         </div>
       )}
+      
+      <CartSidebar />
     </header>
   )
 }
