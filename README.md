@@ -1,2 +1,0 @@
-# Yeild-Sync-Web
-
