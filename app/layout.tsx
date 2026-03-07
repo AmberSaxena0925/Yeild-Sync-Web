@@ -7,9 +7,8 @@ const _geist = Geist({ subsets: ["latin"] });
 const _geistMono = Geist_Mono({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: 'FarmDirect Connect - Smart Farming Solutions',
+  title: 'Yield Sync - Smart Farming Solutions',
   description: 'Digital platform supporting farmers with crop information, growing guides, weather-based recommendations, and market connections.',
-  generator: 'v0.app',
   icons: {
     icon: [
       {

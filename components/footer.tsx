@@ -12,7 +12,7 @@ export function Footer() {
                 <Leaf className="h-5 w-5 text-primary-foreground" />
               </div>
               <span className="text-lg font-bold text-foreground">
-                FarmDirect <span className="text-primary">Connect</span>
+                Yield <span className="text-primary">Sync</span>
               </span>
             </Link>
             <p className="text-sm text-muted-foreground leading-relaxed">
@@ -90,7 +90,7 @@ export function Footer() {
         </div>
 
         <div className="mt-8 border-t border-border pt-8 text-center text-sm text-muted-foreground">
-          <p>&copy; {new Date().getFullYear()} FarmDirect Connect. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} Yield Sync. All rights reserved.</p>
         </div>
       </div>
     </footer>

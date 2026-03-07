@@ -10,8 +10,8 @@ export function Header() {
 
   const navLinks = [
     { href: "/", label: "Home" },
-    { href: "/crops", label: "Crop Catalog" },
-    { href: "/weather", label: "Weather Advisor" },
+    { href: "/crops", label: "Crop Types" },
+    { href: "/weather", label: "Weather" },
     { href: "/market", label: "Market Prices" },
     { href: "/chat", label: "AI Assistant" },
   ]
@@ -24,7 +24,7 @@ export function Header() {
             <Leaf className="h-5 w-5 text-primary-foreground" />
           </div>
           <span className="text-lg font-bold text-foreground md:text-xl">
-            FarmDirect <span className="text-primary">Connect</span>
+            Yield <span className="text-primary">Sync</span>
           </span>
         </Link>
 

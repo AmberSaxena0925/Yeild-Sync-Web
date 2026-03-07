@@ -28,11 +28,6 @@ export function HeroSection() {
             {/* Left Content */}
             <div className="space-y-6">
 
-              <div className="inline-flex items-center gap-2 rounded-full bg-green-100 px-4 py-1.5 text-sm font-medium text-green-700">
-                <Leaf className="h-4 w-4" />
-                Smart Farming Solutions
-              </div>
-
               <h1 className="text-4xl font-bold tracking-tight text-gray-900 md:text-5xl lg:text-6xl">
                 Grow Smarter, <span className="text-green-600">Harvest Better</span>
               </h1>
@@ -92,6 +87,7 @@ export function HeroSection() {
                   icon={<TrendingUp className="h-6 w-6" />}
                   title="Market Prices"
                   description="Real-time pricing and trends"
+                  highlighted
                 />
 
                 <FeatureCard
