@@ -14,6 +14,7 @@ export default function SignupPage() {
   const router = useRouter()
   const [showPassword, setShowPassword] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
@@ -25,13 +26,17 @@ export default function SignupPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+
     if (formData.password !== formData.confirmPassword) {
       alert("Passwords do not match")
       return
     }
+
     setIsLoading(true)
-    // Simulate signup - replace with actual auth logic
+
+    // Simulated signup
     await new Promise((resolve) => setTimeout(resolve, 1000))
+
     setIsLoading(false)
     router.push("/")
   }
@@ -42,58 +47,92 @@ export default function SignupPage() {
       label: "Consumer / Customer",
       description: "Buy fresh produce directly from farmers",
       icon: User,
-      features: ["Browse local farms", "Direct purchases", "Track orders", "Save favorites"],
+      features: [
+        "Browse local farms",
+        "Direct purchases",
+        "Track orders",
+        "Save favorites",
+      ],
     },
     {
       value: "wholesaler",
       label: "Wholesaler",
       description: "Bulk purchases for your business",
       icon: Store,
-      features: ["Bulk pricing", "Business invoicing", "Priority support", "Volume discounts"],
+      features: [
+        "Bulk pricing",
+        "Business invoicing",
+        "Priority support",
+        "Volume discounts",
+      ],
+    },
+    {
+      value: "farmer",
+      label: "Farmer",
+      description: "Sell your produce directly to consumers",
+      icon: Leaf,
+      features: [
+        "List your products",
+        "Manage inventory",
+        "Track sales",
+        "Connect with buyers",
+      ],
     },
   ]
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
       <div className="flex-1 flex items-center justify-center px-4 py-8">
-        <div className="w-full max-w-lg">
+        <div className="w-full max-w-5xl">
+          
+          {/* Logo */}
           <div className="flex justify-center mb-6">
             <Link href="/" className="flex items-center gap-2">
               <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary">
                 <Leaf className="h-6 w-6 text-primary-foreground" />
               </div>
+
               <span className="text-xl font-bold text-foreground">
-                FarmDirect <span className="text-primary">Connect</span>
+                Yield <span className="text-primary">Sync</span>
               </span>
             </Link>
           </div>
 
           <Card className="border-border shadow-lg">
             <CardHeader className="text-center pb-4">
-              <CardTitle className="text-2xl font-bold text-foreground">Create Your Account</CardTitle>
+              <CardTitle className="text-2xl font-bold text-foreground">
+                Create Your Account
+              </CardTitle>
+
               <CardDescription className="text-muted-foreground">
                 Join thousands of farmers and buyers on our platform
               </CardDescription>
             </CardHeader>
+
             <CardContent>
-              <form onSubmit={handleSubmit} className="space-y-5">
-                {/* Account Type Selection */}
+              <form onSubmit={handleSubmit} className="space-y-6">
+
+                {/* Account Type */}
                 <div className="space-y-3">
                   <Label className="text-foreground font-medium text-base">
                     I am a...
                   </Label>
+
                   <RadioGroup
                     value={formData.accountType}
-                    onValueChange={(value) => setFormData({ ...formData, accountType: value })}
-                    className="grid gap-3"
+                    onValueChange={(value) =>
+                      setFormData({ ...formData, accountType: value })
+                    }
+                    className="grid grid-cols-1 md:grid-cols-3 gap-4"
                   >
                     {accountTypes.map((type) => {
                       const Icon = type.icon
                       const isSelected = formData.accountType === type.value
+
                       return (
                         <label
                           key={type.value}
-                          className={`relative flex cursor-pointer rounded-xl border-2 p-4 transition-all ${
+                          className={`relative flex h-full cursor-pointer rounded-xl border-2 p-4 transition-all ${
                             isSelected
                               ? "border-primary bg-primary/5"
                               : "border-border bg-card hover:border-primary/50"
@@ -104,24 +143,38 @@ export default function SignupPage() {
                             id={type.value}
                             className="sr-only"
                           />
+
                           <div className="flex w-full items-start gap-4">
+                            
+                            {/* Icon */}
                             <div
                               className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-lg ${
-                                isSelected ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground"
+                                isSelected
+                                  ? "bg-primary text-primary-foreground"
+                                  : "bg-muted text-muted-foreground"
                               }`}
                             >
                               <Icon className="h-6 w-6" />
                             </div>
+
+                            {/* Content */}
                             <div className="flex-1">
                               <div className="flex items-center justify-between">
-                                <p className="font-semibold text-foreground">{type.label}</p>
+                                <p className="font-semibold text-foreground">
+                                  {type.label}
+                                </p>
+
                                 {isSelected && (
                                   <div className="flex h-6 w-6 items-center justify-center rounded-full bg-primary">
                                     <Check className="h-4 w-4 text-primary-foreground" />
                                   </div>
                                 )}
                               </div>
-                              <p className="mt-1 text-sm text-muted-foreground">{type.description}</p>
+
+                              <p className="mt-1 text-sm text-muted-foreground">
+                                {type.description}
+                              </p>
+
                               <div className="mt-2 flex flex-wrap gap-2">
                                 {type.features.map((feature) => (
                                   <span
@@ -146,96 +199,123 @@ export default function SignupPage() {
 
                 <div className="h-px bg-border" />
 
-                {/* Personal Information */}
+                {/* Personal Info */}
                 <div className="space-y-4">
+
                   <div className="space-y-2">
-                    <Label htmlFor="fullName" className="text-foreground font-medium">
-                      Full Name
-                    </Label>
+                    <Label htmlFor="fullName">Full Name</Label>
                     <Input
                       id="fullName"
                       type="text"
                       placeholder="Enter your full name"
                       value={formData.fullName}
-                      onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          fullName: e.target.value,
+                        })
+                      }
                       required
-                      className="h-12 text-base bg-background border-input"
+                      className="h-12"
                     />
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="email" className="text-foreground font-medium">
-                      Email Address
-                    </Label>
+                    <Label htmlFor="email">Email Address</Label>
                     <Input
                       id="email"
                       type="email"
                       placeholder="farmer@example.com"
                       value={formData.email}
-                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          email: e.target.value,
+                        })
+                      }
                       required
-                      className="h-12 text-base bg-background border-input"
+                      className="h-12"
                     />
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="phone" className="text-foreground font-medium">
-                      Phone Number
-                    </Label>
+                    <Label htmlFor="phone">Phone Number</Label>
                     <Input
                       id="phone"
                       type="tel"
                       placeholder="+91 98765 43210"
                       value={formData.phone}
-                      onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          phone: e.target.value,
+                        })
+                      }
                       required
-                      className="h-12 text-base bg-background border-input"
+                      className="h-12"
                     />
                   </div>
 
+                  {/* Password */}
                   <div className="space-y-2">
-                    <Label htmlFor="password" className="text-foreground font-medium">
-                      Password
-                    </Label>
+                    <Label htmlFor="password">Password</Label>
+
                     <div className="relative">
                       <Input
                         id="password"
                         type={showPassword ? "text" : "password"}
                         placeholder="Create a strong password"
                         value={formData.password}
-                        onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                        onChange={(e) =>
+                          setFormData({
+                            ...formData,
+                            password: e.target.value,
+                          })
+                        }
                         required
                         minLength={8}
-                        className="h-12 text-base pr-12 bg-background border-input"
+                        className="h-12 pr-12"
                       />
+
                       <button
                         type="button"
                         onClick={() => setShowPassword(!showPassword)}
-                        className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
-                        aria-label={showPassword ? "Hide password" : "Show password"}
+                        className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground"
                       >
-                        {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+                        {showPassword ? (
+                          <EyeOff className="h-5 w-5" />
+                        ) : (
+                          <Eye className="h-5 w-5" />
+                        )}
                       </button>
                     </div>
                   </div>
 
+                  {/* Confirm Password */}
                   <div className="space-y-2">
-                    <Label htmlFor="confirmPassword" className="text-foreground font-medium">
+                    <Label htmlFor="confirmPassword">
                       Confirm Password
                     </Label>
+
                     <Input
                       id="confirmPassword"
                       type="password"
                       placeholder="Confirm your password"
                       value={formData.confirmPassword}
-                      onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          confirmPassword: e.target.value,
+                        })
+                      }
                       required
                       minLength={8}
-                      className="h-12 text-base bg-background border-input"
+                      className="h-12"
                     />
                   </div>
                 </div>
 
+                {/* Submit */}
                 <Button
                   type="submit"
                   className="w-full h-12 text-base font-semibold"
@@ -255,7 +335,10 @@ export default function SignupPage() {
               <div className="mt-6 text-center">
                 <p className="text-muted-foreground">
                   Already have an account?{" "}
-                  <Link href="/login" className="text-primary font-semibold hover:underline">
+                  <Link
+                    href="/login"
+                    className="text-primary font-semibold hover:underline"
+                  >
                     Sign in
                   </Link>
                 </p>
@@ -265,10 +348,15 @@ export default function SignupPage() {
 
           <p className="mt-6 text-center text-sm text-muted-foreground">
             By creating an account, you agree to our{" "}
-            <Link href="#" className="text-primary hover:underline">Terms of Service</Link>
-            {" "}and{" "}
-            <Link href="#" className="text-primary hover:underline">Privacy Policy</Link>
+            <Link href="#" className="text-primary hover:underline">
+              Terms of Service
+            </Link>{" "}
+            and{" "}
+            <Link href="#" className="text-primary hover:underline">
+              Privacy Policy
+            </Link>
           </p>
+
         </div>
       </div>
     </div>
