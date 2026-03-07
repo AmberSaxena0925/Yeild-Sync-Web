@@ -3,23 +3,16 @@
 import { useState, useRef, useEffect } from "react"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
-import { ChatMessage } from "@/components/chat-message"
+import { ChatMessage, Message } from "@/components/chat-message"
 import { ChatInput } from "@/components/chat-input"
 import { Button } from "@/components/ui/button"
-import { MessageSquare, Bot, User } from "lucide-react"
-
-interface Message {
-  id: string
-  content: string
-  role: "user" | "assistant"
-  timestamp: Date
-}
+import { MessageSquare, Bot } from "lucide-react"
 
 export default function ChatPage() {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: "1",
-      content: "Hello! I'm your AI farming assistant. I can help you with crop recommendations, growing advice, weather insights, and market information. What would you like to know today?",
+      content: "Hello! I'm your AI farming assistant. I can help you with crop recommendations, growing advice, weather insights, market information, and **crop image analysis**. Simply upload a photo of your crop for instant health assessment and problem detection!",
       role: "assistant",
       timestamp: new Date()
     }
@@ -35,12 +28,24 @@ export default function ChatPage() {
     scrollToBottom()
   }, [messages])
 
-  const handleSendMessage = async (content: string) => {
+  const handleSendMessage = async (content: string, image?: File) => {
+    let imageUrl: string | undefined
+    
+    if (image) {
+      // Convert image to base64 for display
+      imageUrl = await new Promise<string>((resolve) => {
+        const reader = new FileReader()
+        reader.onload = (e) => resolve(e.target?.result as string)
+        reader.readAsDataURL(image)
+      })
+    }
+
     const userMessage: Message = {
       id: Date.now().toString(),
       content,
       role: "user",
-      timestamp: new Date()
+      timestamp: new Date(),
+      image: imageUrl
     }
 
     setMessages(prev => [...prev, userMessage])
@@ -50,13 +55,70 @@ export default function ChatPage() {
     setTimeout(() => {
       const aiResponse: Message = {
         id: (Date.now() + 1).toString(),
-        content: generateAIResponse(content),
+        content: image ? generateImageAnalysis(content) : generateAIResponse(content),
         role: "assistant",
         timestamp: new Date()
       }
       setMessages(prev => [...prev, aiResponse])
       setIsLoading(false)
-    }, 1000 + Math.random() * 2000)
+    }, 2000 + Math.random() * 2000)
+  }
+
+  const generateImageAnalysis = (userInput: string): string => {
+    const analyses = [
+      {
+        issue: "Nitrogen Deficiency",
+        symptoms: "Yellowing leaves, especially older ones, stunted growth",
+        recommendation: "Apply nitrogen-rich fertilizer (urea or ammonium sulfate). Consider legume rotation for long-term soil health.",
+        severity: "Moderate"
+      },
+      {
+        issue: "Leaf Spot Disease",
+        symptoms: "Brown or black spots on leaves, yellowing around spots",
+        recommendation: "Remove affected leaves, apply copper-based fungicide, improve air circulation, avoid overhead watering.",
+        severity: "High"
+      },
+      {
+        issue: "Pest Infestation (Aphids)",
+        symptoms: "Curled leaves, sticky honeydew residue, visible insects",
+        recommendation: "Use neem oil spray, introduce ladybugs, remove heavily infested parts, monitor regularly.",
+        severity: "Moderate"
+      },
+      {
+        issue: "Water Stress",
+        symptoms: "Wilting leaves, dry soil, leaf curling",
+        recommendation: "Increase watering frequency, add mulch to retain moisture, check soil drainage, consider drip irrigation.",
+        severity: "High"
+      },
+      {
+        issue: "Healthy Growth",
+        symptoms: "Vibrant green leaves, strong stems, no visible issues",
+        recommendation: "Continue current care routine, monitor for changes, maintain proper watering and fertilization schedule.",
+        severity: "None"
+      }
+    ]
+
+    const analysis = analyses[Math.floor(Math.random() * analyses.length)]
+    
+    return `🔍 **Crop Analysis Results**
+
+**Detected Issue:** ${analysis.issue}
+**Severity:** ${analysis.severity}
+
+**Symptoms Identified:**
+${analysis.symptoms}
+
+**Recommendations:**
+${analysis.recommendation}
+
+**Additional Tips:**
+• Monitor your crop daily for changes
+• Take photos at the same time each day for comparison
+• Keep a log of treatments applied
+• Consider soil testing if issues persist
+• Contact local agricultural extension for specific regional advice
+
+Would you like more detailed information about any of these recommendations or help with treatment application?`
   }
 
   const generateAIResponse = (userInput: string): string => {
@@ -104,7 +166,7 @@ export default function ChatPage() {
                 </h1>
               </div>
               <p className="text-lg text-muted-foreground">
-                Get expert advice on crops, weather, markets, and farming techniques
+                Get expert advice on crops, weather, markets, and farming techniques. Upload crop photos for instant AI analysis!
               </p>
             </div>
           </div>

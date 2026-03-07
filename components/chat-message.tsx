@@ -1,10 +1,11 @@
 import { Bot, User } from "lucide-react"
 
-interface Message {
+export interface Message {
   id: string
   content: string
   role: "user" | "assistant"
   timestamp: Date
+  image?: string
 }
 
 interface ChatMessageProps {
@@ -27,6 +28,15 @@ export function ChatMessage({ message }: ChatMessageProps) {
           ? "bg-primary text-primary-foreground" 
           : "bg-muted text-foreground"
       }`}>
+        {message.image && (
+          <div className="mb-3">
+            <img 
+              src={message.image} 
+              alt="Crop analysis" 
+              className="rounded-lg max-w-full h-auto"
+            />
+          </div>
+        )}
         <p className="text-sm leading-relaxed">{message.content}</p>
         <p className={`mt-1 text-xs ${
           isUser 

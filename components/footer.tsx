@@ -38,6 +38,11 @@ export function Footer() {
                   Market Prices
                 </Link>
               </li>
+              <li>
+                <Link href="/chat" className="text-sm text-muted-foreground hover:text-primary">
+                  AI Assistant
+                </Link>
+              </li>
             </ul>
           </div>
 
