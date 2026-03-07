@@ -53,7 +53,7 @@ export function CropCard({ crop }: CropCardProps) {
             <div className="flex items-center gap-1">
               <TrendingUp className="h-3.5 w-3.5" />
               <span className="font-semibold text-primary">
-                ${crop.marketPrice} {crop.priceUnit}
+                ₹{crop.marketPrice} {crop.priceUnit}
               </span>
             </div>
           </div>

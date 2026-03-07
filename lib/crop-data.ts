@@ -33,7 +33,7 @@ export const crops: Crop[] = [
     season: ["Winter", "Spring"],
     soilType: ["Loamy", "Clay"],
     region: ["Northern Plains", "Central Region"],
-    marketPrice: 25,
+    marketPrice: 32,
     priceUnit: "per kg",
     timeToHarvest: "120-150 days",
     estimatedYield: "3-5 tonnes/hectare",
@@ -50,15 +50,15 @@ export const crops: Crop[] = [
       harvesting: "Harvest when grains are hard and contain 12-14% moisture. Use combine harvesters for efficient harvesting. Dry grains to 10-12% moisture for safe storage."
     }
   },
-  {
+     {
     id: "rice",
     name: "Rice",
-    image: "/crops/rice.jpg",
+    image: "/crops/rice.png",
     category: "Cereals",
     season: ["Monsoon", "Summer"],
     soilType: ["Clay", "Loamy"],
     region: ["Eastern Region", "Southern Region", "Coastal Areas"],
-    marketPrice: 35,
+    marketPrice: 43,
     priceUnit: "per kg",
     timeToHarvest: "100-150 days",
     estimatedYield: "4-6 tonnes/hectare",
@@ -75,15 +75,15 @@ export const crops: Crop[] = [
       harvesting: "Harvest when 80-85% grains turn golden yellow. Cut panicles, thresh, and dry to 14% moisture content. Use combine harvesters for large-scale operations."
     }
   },
-  {
+    {
     id: "tomato",
     name: "Tomato",
-    image: "/crops/tomato.jpg",
+    image: "/crops/TOMATO.PNG",
     category: "Vegetables",
     season: ["Summer", "Monsoon", "Winter"],
     soilType: ["Loamy", "Sandy Loam"],
     region: ["All Regions"],
-    marketPrice: 40,
+    marketPrice: 33,
     priceUnit: "per kg",
     timeToHarvest: "60-90 days",
     estimatedYield: "25-30 tonnes/hectare",
@@ -100,7 +100,7 @@ export const crops: Crop[] = [
       harvesting: "Harvest at mature green stage for distant markets, pink stage for local markets. Handle carefully to avoid bruising. Multiple harvests over 2-3 months."
     }
   },
-  {
+    {
     id: "cotton",
     name: "Cotton",
     image: "/crops/cotton.jpg",
@@ -108,7 +108,7 @@ export const crops: Crop[] = [
     season: ["Monsoon"],
     soilType: ["Black Cotton Soil", "Loamy"],
     region: ["Central Region", "Southern Region", "Western Region"],
-    marketPrice: 65,
+    marketPrice: 75,
     priceUnit: "per kg",
     timeToHarvest: "150-180 days",
     estimatedYield: "15-20 quintals/hectare",
@@ -125,7 +125,7 @@ export const crops: Crop[] = [
       harvesting: "Start picking when bolls fully open. Pick in 3-4 rounds at 15-day intervals. Avoid picking wet cotton. Store in dry, well-ventilated areas. Grade before sale."
     }
   },
-  {
+    {
     id: "potato",
     name: "Potato",
     image: "/crops/potato.jpg",
@@ -133,7 +133,7 @@ export const crops: Crop[] = [
     season: ["Winter", "Spring"],
     soilType: ["Sandy Loam", "Loamy"],
     region: ["Northern Plains", "Hills", "Central Region"],
-    marketPrice: 20,
+    marketPrice: 22,
     priceUnit: "per kg",
     timeToHarvest: "75-120 days",
     estimatedYield: "25-35 tonnes/hectare",
@@ -150,15 +150,15 @@ export const crops: Crop[] = [
       harvesting: "Harvest when leaves turn yellow and dry. Cut haulms 10-15 days before harvest. Avoid injury during digging. Cure tubers for 10-15 days before storage."
     }
   },
-  {
+    {
     id: "sugarcane",
     name: "Sugarcane",
-    image: "/crops/sugarcane.jpg",
+    image: "/crops/sugarcane.png",
     category: "Cash Crops",
     season: ["Spring", "Autumn"],
     soilType: ["Loamy", "Clay Loam"],
     region: ["Northern Plains", "Southern Region", "Western Region"],
-    marketPrice: 3.5,
+    marketPrice: 10,
     priceUnit: "per kg",
     timeToHarvest: "10-14 months",
     estimatedYield: "80-100 tonnes/hectare",
@@ -175,7 +175,7 @@ export const crops: Crop[] = [
       harvesting: "Harvest when cane matures (Brix reading 18-20%). Cut close to ground. Remove trash and top. Transport to mill within 24 hours of cutting."
     }
   },
-  {
+    {
     id: "onion",
     name: "Onion",
     image: "/crops/onion.jpg",
@@ -183,7 +183,7 @@ export const crops: Crop[] = [
     season: ["Winter", "Summer", "Monsoon"],
     soilType: ["Sandy Loam", "Loamy"],
     region: ["All Regions"],
-    marketPrice: 30,
+    marketPrice: 27,
     priceUnit: "per kg",
     timeToHarvest: "90-150 days",
     estimatedYield: "20-25 tonnes/hectare",
@@ -200,7 +200,7 @@ export const crops: Crop[] = [
       harvesting: "Harvest when 50-75% tops fall over naturally. Cure in field for 3-5 days. Cut tops leaving 2.5 cm neck. Grade and store in well-ventilated structures."
     }
   },
-  {
+    {
     id: "maize",
     name: "Maize (Corn)",
     image: "/crops/maize.jpg",
@@ -208,7 +208,7 @@ export const crops: Crop[] = [
     season: ["Monsoon", "Winter", "Spring"],
     soilType: ["Loamy", "Sandy Loam"],
     region: ["All Regions"],
-    marketPrice: 22,
+    marketPrice: 23,
     priceUnit: "per kg",
     timeToHarvest: "80-110 days",
     estimatedYield: "4-8 tonnes/hectare",

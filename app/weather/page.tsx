@@ -168,7 +168,7 @@ export default function WeatherPage() {
                                   {crop.timeToHarvest}
                                 </Badge>
                                 <Badge variant="outline">
-                                  ${crop.marketPrice} {crop.priceUnit}
+                                  ₹{crop.marketPrice} {crop.priceUnit}
                                 </Badge>
                               </div>
                               <Button

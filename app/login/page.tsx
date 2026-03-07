@@ -37,7 +37,7 @@ export default function LoginPage() {
                 <Leaf className="h-6 w-6 text-primary-foreground" />
               </div>
               <span className="text-xl font-bold text-foreground">
-                FarmDirect <span className="text-primary">Connect</span>
+                Yield <span className="text-primary">Sync</span>
               </span>
             </Link>
           </div>
@@ -117,7 +117,7 @@ export default function LoginPage() {
 
               <div className="mt-6 text-center">
                 <p className="text-muted-foreground">
-                  New to FarmDirect Connect?{" "}
+                  New to Yield Sync?{" "}
                   <Link href="/signup" className="text-primary font-semibold hover:underline">
                     Create an account
                   </Link>

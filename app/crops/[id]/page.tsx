@@ -146,7 +146,7 @@ export default async function CropDetailPage({ params }: CropPageProps) {
                           Market Price
                         </p>
                         <p className="font-semibold text-foreground">
-                          ${crop.marketPrice} {crop.priceUnit}
+                          ₹{crop.marketPrice} {crop.priceUnit}
                         </p>
                       </div>
                     </CardContent>

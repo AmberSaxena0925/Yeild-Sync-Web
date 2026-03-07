@@ -122,7 +122,7 @@ export default function MarketPage() {
                       Highest Price
                     </p>
                     <p className="text-2xl font-bold text-foreground">
-                      ${highestPrice.toFixed(2)}
+                      ₹{highestPrice.toFixed(2)}
                     </p>
                   </div>
                 </CardContent>
@@ -137,7 +137,7 @@ export default function MarketPage() {
                       Average Price
                     </p>
                     <p className="text-2xl font-bold text-foreground">
-                      ${averagePrice.toFixed(2)}
+                      ₹{averagePrice.toFixed(2)}
                     </p>
                   </div>
                 </CardContent>
@@ -150,7 +150,7 @@ export default function MarketPage() {
                   <div>
                     <p className="text-sm text-muted-foreground">Lowest Price</p>
                     <p className="text-2xl font-bold text-foreground">
-                      ${lowestPrice.toFixed(2)}
+                      ₹{lowestPrice.toFixed(2)}
                     </p>
                   </div>
                 </CardContent>
@@ -258,7 +258,7 @@ export default function MarketPage() {
                         </TableCell>
                         <TableCell className="text-right">
                           <span className="text-lg font-semibold text-primary">
-                            ${crop.marketPrice}
+                            ₹{crop.marketPrice}
                           </span>
                           <span className="text-sm text-muted-foreground">
                             {" "}
