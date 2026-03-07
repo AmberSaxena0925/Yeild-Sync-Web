@@ -13,6 +13,7 @@ export function Header() {
     { href: "/crops", label: "Crop Catalog" },
     { href: "/weather", label: "Weather Advisor" },
     { href: "/market", label: "Market Prices" },
+    { href: "/chat", label: "AI Assistant" },
   ]
 
   return (
