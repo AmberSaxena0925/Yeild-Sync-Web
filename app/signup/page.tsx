@@ -3,82 +3,54 @@
 import { useState } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
+import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
-import { Leaf, Eye, EyeOff, ArrowRight, User, Store, Check } from "lucide-react"
+import { Alert, AlertDescription } from "@/components/ui/alert"
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
+import { Leaf, Eye, EyeOff, ArrowRight, User, Store, Check, AlertCircle } from "lucide-react"
+import { useAuth } from "@/lib/auth-context"
+import { signupSchema, SignupFormData } from "@/lib/validation"
 
 export default function SignupPage() {
   const router = useRouter()
+  const { signup, isLoading } = useAuth()
   const [showPassword, setShowPassword] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
-  const [formData, setFormData] = useState({
-    fullName: "",
-    email: "",
-    phone: "",
-    password: "",
-    confirmPassword: "",
-    accountType: "consumer",
+  const form = useForm<SignupFormData>({
+    resolver: zodResolver(signupSchema),
+    defaultValues: {
+      fullName: "",
+      email: "",
+      phone: "",
+      password: "",
+      confirmPassword: "",
+      accountType: "consumer",
+    },
   })
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
+  const onSubmit = async (data: SignupFormData) => {
+    setError(null)
 
-    if (formData.password !== formData.confirmPassword) {
-      alert("Passwords do not match")
-      return
+    const result = await signup({
+      fullName: data.fullName,
+      email: data.email,
+      phone: data.phone,
+      password: data.password,
+      accountType: data.accountType,
+    })
+
+    if (result.success) {
+      router.push("/")
+    } else {
+      setError(result.error || "Registration failed")
     }
-
-    setIsLoading(true)
-
-    // Simulated signup
-    await new Promise((resolve) => setTimeout(resolve, 1000))
-
-    setIsLoading(false)
-    router.push("/")
   }
-
-  const accountTypes = [
-    {
-      value: "consumer",
-      label: "Consumer / Customer",
-      description: "Buy fresh produce directly from farmers",
-      icon: User,
-      features: [
-        "Browse local farms",
-        "Direct purchases",
-        "Track orders",
-        "Save favorites",
-      ],
-    },
-    {
-      value: "wholesaler",
-      label: "Wholesaler",
-      description: "Bulk purchases for your business",
-      icon: Store,
-      features: [
-        "Bulk pricing",
-        "Business invoicing",
-        "Priority support",
-        "Volume discounts",
-      ],
-    },
-    {
-      value: "farmer",
-      label: "Farmer",
-      description: "Sell your produce directly to consumers",
-      icon: Leaf,
-      features: [
-        "List your products",
-        "Manage inventory",
-        "Track sales",
-        "Connect with buyers",
-      ],
-    },
-  ]
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
@@ -110,227 +82,188 @@ export default function SignupPage() {
             </CardHeader>
 
             <CardContent>
-              <form onSubmit={handleSubmit} className="space-y-6">
+              {error && (
+                <Alert variant="destructive" className="mb-4">
+                  <AlertCircle className="h-4 w-4" />
+                  <AlertDescription>{error}</AlertDescription>
+                </Alert>
+              )}
+              <Form {...form}>
+                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
 
-                {/* Account Type */}
-                <div className="space-y-3">
-                  <Label className="text-foreground font-medium text-base">
-                    I am a...
-                  </Label>
+                  <div className="h-px bg-border" />
 
-                  <RadioGroup
-                    value={formData.accountType}
-                    onValueChange={(value) =>
-                      setFormData({ ...formData, accountType: value })
-                    }
-                    className="grid grid-cols-1 md:grid-cols-3 gap-4"
-                  >
-                    {accountTypes.map((type) => {
-                      const Icon = type.icon
-                      const isSelected = formData.accountType === type.value
+                  {/* Personal Info */}
+                  <div className="space-y-4">
 
-                      return (
-                        <label
-                          key={type.value}
-                          className={`relative flex h-full cursor-pointer rounded-xl border-2 p-4 transition-all ${
-                            isSelected
-                              ? "border-primary bg-primary/5"
-                              : "border-border bg-card hover:border-primary/50"
-                          }`}
-                        >
-                          <RadioGroupItem
-                            value={type.value}
-                            id={type.value}
-                            className="sr-only"
-                          />
+                    <FormField
+                      control={form.control}
+                      name="fullName"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Full Name</FormLabel>
+                          <FormControl>
+                            <Input
+                              type="text"
+                              placeholder="Enter your full name"
+                              className="h-12"
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
 
-                          <div className="flex w-full items-start gap-4">
-                            
-                            {/* Icon */}
-                            <div
-                              className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-lg ${
-                                isSelected
-                                  ? "bg-primary text-primary-foreground"
-                                  : "bg-muted text-muted-foreground"
-                              }`}
-                            >
-                              <Icon className="h-6 w-6" />
-                            </div>
+                    <FormField
+                      control={form.control}
+                      name="email"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Email Address</FormLabel>
+                          <FormControl>
+                            <Input
+                              type="email"
+                              placeholder="farmer@example.com"
+                              className="h-12"
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
 
-                            {/* Content */}
-                            <div className="flex-1">
-                              <div className="flex items-center justify-between">
-                                <p className="font-semibold text-foreground">
-                                  {type.label}
-                                </p>
+                    <FormField
+                      control={form.control}
+                      name="phone"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Phone Number</FormLabel>
+                          <FormControl>
+                            <Input
+                              type="tel"
+                              placeholder="+91 98765 43210"
+                              className="h-12"
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
 
-                                {isSelected && (
-                                  <div className="flex h-6 w-6 items-center justify-center rounded-full bg-primary">
-                                    <Check className="h-4 w-4 text-primary-foreground" />
-                                  </div>
+                    {/* Password */}
+                    <FormField
+                      control={form.control}
+                      name="password"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Password</FormLabel>
+                          <FormControl>
+                            <div className="relative">
+                              <Input
+                                type={showPassword ? "text" : "password"}
+                                placeholder="Create a strong password"
+                                className="h-12 pr-12"
+                                {...field}
+                              />
+                              <button
+                                type="button"
+                                onClick={() => setShowPassword(!showPassword)}
+                                className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground"
+                              >
+                                {showPassword ? (
+                                  <EyeOff className="h-5 w-5" />
+                                ) : (
+                                  <Eye className="h-5 w-5" />
                                 )}
-                              </div>
-
-                              <p className="mt-1 text-sm text-muted-foreground">
-                                {type.description}
-                              </p>
-
-                              <div className="mt-2 flex flex-wrap gap-2">
-                                {type.features.map((feature) => (
-                                  <span
-                                    key={feature}
-                                    className={`inline-flex items-center rounded-full px-2 py-0.5 text-xs ${
-                                      isSelected
-                                        ? "bg-primary/10 text-primary"
-                                        : "bg-muted text-muted-foreground"
-                                    }`}
-                                  >
-                                    {feature}
-                                  </span>
-                                ))}
-                              </div>
+                              </button>
                             </div>
-                          </div>
-                        </label>
-                      )
-                    })}
-                  </RadioGroup>
-                </div>
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
 
-                <div className="h-px bg-border" />
+                    {/* Confirm Password */}
+                    <FormField
+                      control={form.control}
+                      name="confirmPassword"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Confirm Password</FormLabel>
+                          <FormControl>
+                            <Input
+                              type="password"
+                              placeholder="Confirm your password"
+                              className="h-12"
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
 
-                {/* Personal Info */}
-                <div className="space-y-4">
-
-                  <div className="space-y-2">
-                    <Label htmlFor="fullName">Full Name</Label>
-                    <Input
-                      id="fullName"
-                      type="text"
-                      placeholder="Enter your full name"
-                      value={formData.fullName}
-                      onChange={(e) =>
-                        setFormData({
-                          ...formData,
-                          fullName: e.target.value,
-                        })
-                      }
-                      required
-                      className="h-12"
+                    <FormField
+                      control={form.control}
+                      name="accountType"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Account Type</FormLabel>
+                          <FormControl>
+                            <RadioGroup
+                              onValueChange={field.onChange}
+                              defaultValue={field.value}
+                              className="flex flex-col space-y-2"
+                            >
+                              <div className="flex items-center space-x-2">
+                                <RadioGroupItem value="consumer" id="consumer" />
+                                <Label htmlFor="consumer" className="flex items-center gap-2">
+                                  <User className="h-4 w-4" />
+                                  Consumer
+                                </Label>
+                              </div>
+                              <div className="flex items-center space-x-2">
+                                <RadioGroupItem value="farmer" id="farmer" />
+                                <Label htmlFor="farmer" className="flex items-center gap-2">
+                                  <Store className="h-4 w-4" />
+                                  Farmer
+                                </Label>
+                              </div>
+                              <div className="flex items-center space-x-2">
+                                <RadioGroupItem value="vendor" id="vendor" />
+                                <Label htmlFor="vendor" className="flex items-center gap-2">
+                                  <Store className="h-4 w-4" />
+                                  Vendor
+                                </Label>
+                              </div>
+                            </RadioGroup>
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
                     />
                   </div>
 
-                  <div className="space-y-2">
-                    <Label htmlFor="email">Email Address</Label>
-                    <Input
-                      id="email"
-                      type="email"
-                      placeholder="farmer@example.com"
-                      value={formData.email}
-                      onChange={(e) =>
-                        setFormData({
-                          ...formData,
-                          email: e.target.value,
-                        })
-                      }
-                      required
-                      className="h-12"
-                    />
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="phone">Phone Number</Label>
-                    <Input
-                      id="phone"
-                      type="tel"
-                      placeholder="+91 98765 43210"
-                      value={formData.phone}
-                      onChange={(e) =>
-                        setFormData({
-                          ...formData,
-                          phone: e.target.value,
-                        })
-                      }
-                      required
-                      className="h-12"
-                    />
-                  </div>
-
-                  {/* Password */}
-                  <div className="space-y-2">
-                    <Label htmlFor="password">Password</Label>
-
-                    <div className="relative">
-                      <Input
-                        id="password"
-                        type={showPassword ? "text" : "password"}
-                        placeholder="Create a strong password"
-                        value={formData.password}
-                        onChange={(e) =>
-                          setFormData({
-                            ...formData,
-                            password: e.target.value,
-                          })
-                        }
-                        required
-                        minLength={8}
-                        className="h-12 pr-12"
-                      />
-
-                      <button
-                        type="button"
-                        onClick={() => setShowPassword(!showPassword)}
-                        className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground"
-                      >
-                        {showPassword ? (
-                          <EyeOff className="h-5 w-5" />
-                        ) : (
-                          <Eye className="h-5 w-5" />
-                        )}
-                      </button>
-                    </div>
-                  </div>
-
-                  {/* Confirm Password */}
-                  <div className="space-y-2">
-                    <Label htmlFor="confirmPassword">
-                      Confirm Password
-                    </Label>
-
-                    <Input
-                      id="confirmPassword"
-                      type="password"
-                      placeholder="Confirm your password"
-                      value={formData.confirmPassword}
-                      onChange={(e) =>
-                        setFormData({
-                          ...formData,
-                          confirmPassword: e.target.value,
-                        })
-                      }
-                      required
-                      minLength={8}
-                      className="h-12"
-                    />
-                  </div>
-                </div>
-
-                {/* Submit */}
-                <Button
-                  type="submit"
-                  className="w-full h-12 text-base font-semibold"
-                  disabled={isLoading}
-                >
-                  {isLoading ? (
-                    "Creating Account..."
-                  ) : (
-                    <>
-                      Create Account
-                      <ArrowRight className="ml-2 h-5 w-5" />
-                    </>
-                  )}
-                </Button>
-              </form>
+                  {/* Submit */}
+                  <Button
+                    type="submit"
+                    className="w-full h-12 text-base font-semibold"
+                    disabled={isLoading}
+                  >
+                    {isLoading ? (
+                      "Creating Account..."
+                    ) : (
+                      <>
+                        Create Account
+                        <ArrowRight className="ml-2 h-5 w-5" />
+                      </>
+                    )}
+                  </Button>
+                </form>
+              </Form>
 
               <div className="mt-6 text-center">
                 <p className="text-muted-foreground">

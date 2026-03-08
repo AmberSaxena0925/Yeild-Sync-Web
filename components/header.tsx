@@ -5,12 +5,14 @@ import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { useCart } from "@/lib/cart-context"
+import { useAuth } from "@/lib/auth-context"
 import { CartSidebar } from "@/components/cart-sidebar"
-import { Menu, X, Leaf, ShoppingCart } from "lucide-react"
+import { Menu, X, Leaf, ShoppingCart, User, LogOut } from "lucide-react"
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const { getTotalItems, toggleCart } = useCart()
+  const { user, logout, isAuthenticated } = useAuth()
 
   const navLinks = [
     { href: "/", label: "Home" },
@@ -54,14 +56,31 @@ export function Header() {
               </Badge>
             )}
           </Button>
-          <Button variant="outline" size="sm" asChild>
-            <Link href="/login">
-              Login
-            </Link>
-          </Button>
-          <Button size="sm" asChild>
-            <Link href="/signup">Get Started</Link>
-          </Button>
+          {isAuthenticated ? (
+            <>
+              <Button variant="ghost" size="sm" asChild className="gap-2">
+                <Link href="/profile">
+                  <User className="h-4 w-4" />
+                  <span className="hidden sm:inline">{user?.fullName}</span>
+                </Link>
+              </Button>
+              <Button variant="outline" size="sm" onClick={logout} className="gap-2">
+                <LogOut className="h-4 w-4" />
+                <span className="hidden sm:inline">Logout</span>
+              </Button>
+            </>
+          ) : (
+            <>
+              <Button variant="outline" size="sm" asChild>
+                <Link href="/login">
+                  Login
+                </Link>
+              </Button>
+              <Button size="sm" asChild>
+                <Link href="/signup">Get Started</Link>
+              </Button>
+            </>
+          )}
         </div>
 
         <button
@@ -91,14 +110,29 @@ export function Header() {
                 <ShoppingCart className="mr-2 h-4 w-4" />
                 Cart ({getTotalItems()})
               </Button>
-              <Button variant="outline" asChild className="w-full">
-                <Link href="/login">
-                  Login
-                </Link>
-              </Button>
-              <Button asChild className="w-full">
-                <Link href="/signup">Get Started</Link>
-              </Button>
+              {isAuthenticated ? (
+                <>
+                  <Button variant="outline" className="w-full justify-start gap-2">
+                    <User className="h-4 w-4" />
+                    {user?.fullName}
+                  </Button>
+                  <Button variant="outline" onClick={logout} className="w-full justify-start gap-2">
+                    <LogOut className="h-4 w-4" />
+                    Logout
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <Button variant="outline" asChild className="w-full">
+                    <Link href="/login">
+                      Login
+                    </Link>
+                  </Button>
+                  <Button asChild className="w-full">
+                    <Link href="/signup">Get Started</Link>
+                  </Button>
+                </>
+              )}
             </div>
           </nav>
         </div>

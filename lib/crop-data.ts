@@ -11,6 +11,7 @@ export interface Crop {
   timeToHarvest: string
   estimatedYield: string
   description: string
+  difficulty: "Easy" | "Medium" | "Hard"
   guide: {
     soilPreparation: string
     climate: string
@@ -37,6 +38,7 @@ export const crops: Crop[] = [
     timeToHarvest: "120-150 days",
     estimatedYield: "3-5 tonnes/hectare",
     description: "Wheat is a staple cereal grain grown worldwide. It thrives in temperate climates and is essential for bread, pasta, and many food products.",
+    difficulty: "Easy",
     guide: {
       soilPreparation: "Prepare the field by deep plowing (20-25 cm) followed by 2-3 harrowings. Ensure good drainage and remove weeds. Apply well-decomposed farmyard manure (10-12 tonnes/hectare) 15-20 days before sowing.",
       climate: "Wheat requires cool weather during vegetative growth (10-15°C) and warm weather during grain filling (21-26°C). Avoid areas with high humidity during grain maturation to prevent fungal diseases.",
@@ -61,6 +63,7 @@ export const crops: Crop[] = [
     timeToHarvest: "100-150 days",
     estimatedYield: "4-6 tonnes/hectare",
     description: "Rice is a primary food source for more than half the world's population. It grows best in warm, humid conditions with abundant water supply.",
+    difficulty: "Medium",
     guide: {
       soilPreparation: "Puddle the field by flooding and plowing 2-3 times. Level the field properly for uniform water distribution. Apply 10-15 tonnes of farmyard manure during land preparation.",
       climate: "Requires warm and humid climate with temperature 20-35°C. Needs abundant water (150-300 cm rainfall or irrigation). High humidity during vegetative phase is beneficial.",
@@ -85,6 +88,7 @@ export const crops: Crop[] = [
     timeToHarvest: "60-90 days",
     estimatedYield: "25-30 tonnes/hectare",
     description: "Tomatoes are versatile vegetables used fresh and processed. They are rich in vitamins and antioxidants, making them valuable both nutritionally and commercially.",
+    difficulty: "Easy",
     guide: {
       soilPreparation: "Deep plow the field and mix 20-25 tonnes of well-rotted farmyard manure. Form raised beds or ridges for good drainage. Soil pH should be 6.0-7.0.",
       climate: "Optimal temperature: 21-24°C for growth, 15-20°C for fruit setting. Cannot tolerate frost. Requires 6-8 hours of sunlight daily. Avoid waterlogging.",
@@ -109,6 +113,7 @@ export const crops: Crop[] = [
     timeToHarvest: "150-180 days",
     estimatedYield: "15-20 quintals/hectare",
     description: "Cotton is a major cash crop providing raw material for the textile industry. It requires careful management but offers good returns for experienced farmers.",
+    difficulty: "Hard",
     guide: {
       soilPreparation: "Deep plow during summer to break hard pans. Apply 10-15 tonnes FYM. Form ridges and furrows at 90-120 cm apart. Ensure proper drainage to prevent waterlogging.",
       climate: "Requires warm climate with temperature 21-30°C. Needs 50-100 cm rainfall well-distributed over growing season. Clear sunny days essential during boll development.",
@@ -133,6 +138,7 @@ export const crops: Crop[] = [
     timeToHarvest: "75-120 days",
     estimatedYield: "25-35 tonnes/hectare",
     description: "Potatoes are versatile vegetables with high demand. They are relatively easy to grow and provide good yields with proper care and management.",
+    difficulty: "Easy",
     guide: {
       soilPreparation: "Deep plow and harrow 3-4 times for fine tilth. Add 25-30 tonnes FYM during field preparation. Form ridges 60 cm apart and 15-20 cm high.",
       climate: "Cool season crop requiring 15-25°C during growth. Night temperature below 20°C essential for tuber formation. Frost can damage foliage.",
@@ -157,6 +163,7 @@ export const crops: Crop[] = [
     timeToHarvest: "10-14 months",
     estimatedYield: "80-100 tonnes/hectare",
     description: "Sugarcane is a major commercial crop for sugar production. It requires intensive management but provides high returns and supports rural livelihoods.",
+    difficulty: "Hard",
     guide: {
       soilPreparation: "Deep plow (30-40 cm) followed by 2-3 harrowings. Form furrows 75-90 cm apart and 20-25 cm deep. Apply 25-30 tonnes FYM before last plowing.",
       climate: "Tropical climate with 20-35°C temperature. Requires 100-150 cm well-distributed rainfall. High temperature and humidity during vegetative growth; dry, cool weather during maturation.",
@@ -181,6 +188,7 @@ export const crops: Crop[] = [
     timeToHarvest: "90-150 days",
     estimatedYield: "20-25 tonnes/hectare",
     description: "Onions are essential culinary vegetables with year-round demand. They have good storage potential and can be grown in different seasons for continuous supply.",
+    difficulty: "Medium",
     guide: {
       soilPreparation: "Prepare fine tilth by plowing and harrowing. Add 15-20 tonnes FYM. Form raised beds (1.2m wide) or flat beds. Soil pH should be 6.0-7.5.",
       climate: "Cool weather (13-24°C) during vegetative growth; warm, dry weather for bulb development. Long days (12-14 hours) favor bulbing. Excess moisture causes rotting.",
@@ -205,6 +213,7 @@ export const crops: Crop[] = [
     timeToHarvest: "80-110 days",
     estimatedYield: "4-8 tonnes/hectare",
     description: "Maize is a versatile cereal used for food, feed, and industrial purposes. It adapts to various climates and provides quick returns with proper management.",
+    difficulty: "Easy",
     guide: {
       soilPreparation: "Plow field 2-3 times to achieve good tilth. Apply 10-15 tonnes FYM during land preparation. Form ridges 60-75 cm apart for better drainage and root development.",
       climate: "Warm season crop requiring 20-30°C temperature. Cannot tolerate frost. Requires good sunshine and moderate rainfall (50-75 cm). Sensitive to waterlogging.",
