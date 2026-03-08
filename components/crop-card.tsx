@@ -10,12 +10,6 @@ interface CropCardProps {
 }
 
 export function CropCard({ crop }: CropCardProps) {
-  const difficultyColor = {
-    Easy: "bg-chart-1 text-primary-foreground",
-    Medium: "bg-accent text-accent-foreground",
-    Hard: "bg-destructive text-destructive-foreground"
-  }
-
   return (
     <Link href={`/crops/${crop.id}`}>
       <Card className="group h-full overflow-hidden border-border transition-all duration-300 hover:border-primary hover:shadow-lg">
@@ -27,11 +21,6 @@ export function CropCard({ crop }: CropCardProps) {
             className="object-cover"
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
-          <div className="absolute left-3 top-3 flex gap-2">
-            <Badge className={difficultyColor[crop.difficulty]}>
-              {crop.difficulty}
-            </Badge>
-          </div>
           <div className="absolute bottom-3 right-3">
             <Badge variant="secondary" className="bg-card/90 text-foreground">
               {crop.category}

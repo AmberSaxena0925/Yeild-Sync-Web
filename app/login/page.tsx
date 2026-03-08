@@ -24,6 +24,10 @@ export default function LoginPage() {
     // Simulate login - replace with actual auth logic
     await new Promise((resolve) => setTimeout(resolve, 1000))
     setIsLoading(false)
+    // mark user as logged in (placeholder for real auth)
+    try {
+      localStorage.setItem("isLoggedIn", "true")
+    } catch {} // ignore if not available
     router.push("/")
   }
 
