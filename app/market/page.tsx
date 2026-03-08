@@ -231,9 +231,6 @@ export default function MarketPage() {
                               <p className="font-medium text-foreground">
                                 {crop.name}
                               </p>
-                              <p className="text-xs text-muted-foreground">
-                                {crop.difficulty} difficulty
-                              </p>
                             </div>
                           </div>
                         </TableCell>

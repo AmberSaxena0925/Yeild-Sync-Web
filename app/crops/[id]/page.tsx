@@ -86,12 +86,6 @@ export default async function CropDetailPage({ params }: CropPageProps) {
     },
   ]
 
-  const difficultyColor = {
-    Easy: "bg-chart-1 text-primary-foreground",
-    Medium: "bg-accent text-accent-foreground",
-    Hard: "bg-destructive text-destructive-foreground",
-  }
-
   return (
     <div className="flex min-h-screen flex-col">
       <Header />
@@ -121,9 +115,6 @@ export default async function CropDetailPage({ params }: CropPageProps) {
               {/* Crop Info */}
               <div className="space-y-6">
                 <div className="flex flex-wrap items-center gap-2">
-                  <Badge className={difficultyColor[crop.difficulty]}>
-                    {crop.difficulty}
-                  </Badge>
                   <Badge variant="secondary">{crop.category}</Badge>
                 </div>
 

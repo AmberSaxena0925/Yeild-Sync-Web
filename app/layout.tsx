@@ -3,6 +3,8 @@ import { Geist, Geist_Mono } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import { CartProvider } from '@/lib/cart-context'
 import { AuthProvider } from '@/lib/auth-context'
+import Link from 'next/link'
+import { Bot } from 'lucide-react'
 import './globals.css'
 
 const _geist = Geist({ subsets: ["latin"] });
@@ -41,6 +43,12 @@ export default function RootLayout({
         <AuthProvider>
           <CartProvider>
             {children}
+            {/* floating AI assistant icon */}
+            <Link href="/chat">
+              <div className="fixed bottom-4 right-4 z-50 cursor-pointer bg-green-600 p-3 rounded-full shadow-lg hover:bg-green-700">
+                <Bot className="h-6 w-6 text-white" />
+              </div>
+            </Link>
           </CartProvider>
         </AuthProvider>
         <Analytics />

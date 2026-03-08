@@ -1,18 +1,64 @@
 "use client"
 
 import Link from "next/link"
-import { useState } from "react"
+import { useState, useRef, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
+import { Input } from "@/components/ui/input"
 import { useCart } from "@/lib/cart-context"
 import { useAuth } from "@/lib/auth-context"
 import { CartSidebar } from "@/components/cart-sidebar"
 import { Menu, X, Leaf, ShoppingCart, User, LogOut } from "lucide-react"
+import { Menu, X, Leaf, ShoppingCart, Search } from "lucide-react"
+import { crops } from "@/lib/crop-data"
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [searchQuery, setSearchQuery] = useState("")
+  const [showSearchResults, setShowSearchResults] = useState(false)
+  const [loggedIn, setLoggedIn] = useState(false)
+  const searchRef = useRef<HTMLDivElement>(null)
   const { getTotalItems, toggleCart } = useCart()
   const { user, logout, isAuthenticated } = useAuth()
+
+  useEffect(() => {
+    try {
+      setLoggedIn(localStorage.getItem("isLoggedIn") === "true")
+    } catch {
+      setLoggedIn(false)
+    }
+  }, [])
+
+  const filteredCrops = crops
+    .filter(
+      (crop) =>
+        crop.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        crop.category.toLowerCase().includes(searchQuery.toLowerCase())
+    )
+    .slice(0, 5)
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (searchRef.current && !searchRef.current.contains(event.target as Node)) {
+        setShowSearchResults(false)
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside)
+    return () => document.removeEventListener("mousedown", handleClickOutside)
+  }, [])
+
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(e.target.value)
+    setShowSearchResults(e.target.value.length > 0)
+  }
+
+  const handleSearchSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    if (filteredCrops.length > 0) {
+      window.location.href = `/crops/${filteredCrops[0].id}`
+    }
+  }
 
   const navLinks = [
     { href: "/", label: "Home" },
@@ -20,7 +66,6 @@ export function Header() {
     { href: "/shop", label: "Shop" },
     { href: "/weather", label: "Weather" },
     { href: "/market", label: "Market Prices" },
-    { href: "/chat", label: "AI Assistant" },
   ]
 
   return (
@@ -48,6 +93,51 @@ export function Header() {
         </nav>
 
         <div className="hidden items-center gap-3 md:flex">
+          <div className="relative" ref={searchRef}>
+            <form onSubmit={handleSearchSubmit}>
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                <Input
+                  type="search"
+                  placeholder="Search crops..."
+                  className="w-64 pl-9"
+                  value={searchQuery}
+                  onChange={handleSearchChange}
+                  onFocus={() => searchQuery && setShowSearchResults(true)}
+                />
+              </div>
+            </form>
+            {showSearchResults && filteredCrops.length > 0 && (
+              <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-border rounded-lg shadow-lg z-50 max-h-80 overflow-y-auto">
+                {filteredCrops.map((crop) => (
+                  <Link
+                    key={crop.id}
+                    href={`/crops/${crop.id}`}
+                    className="flex items-center gap-3 px-4 py-3 hover:bg-muted transition-colors border-b border-border last:border-b-0"
+                    onClick={() => {
+                      setShowSearchResults(false)
+                      setSearchQuery("")
+                    }}
+                  >
+                    <img
+                      src={crop.image}
+                      alt={crop.name}
+                      className="w-8 h-8 rounded object-cover"
+                    />
+                    <div>
+                      <div className="font-medium text-sm">{crop.name}</div>
+                      <div className="text-xs text-muted-foreground">{crop.category}</div>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            )}
+            {showSearchResults && searchQuery && filteredCrops.length === 0 && (
+              <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-border rounded-lg shadow-lg z-50 p-4 text-center text-sm text-muted-foreground">
+                No crops found matching "{searchQuery}"
+              </div>
+            )}
+          </div>
           <Button variant="ghost" size="sm" onClick={toggleCart} className="relative">
             <ShoppingCart className="h-5 w-5" />
             {getTotalItems() > 0 && (
@@ -70,6 +160,7 @@ export function Header() {
               </Button>
             </>
           ) : (
+          {!loggedIn && (
             <>
               <Button variant="outline" size="sm" asChild>
                 <Link href="/login">
@@ -95,6 +186,54 @@ export function Header() {
       {isMenuOpen && (
         <div className="border-t border-border bg-card md:hidden">
           <nav className="container mx-auto flex flex-col gap-2 px-4 py-4">
+            <div className="relative" ref={searchRef}>
+              <form onSubmit={handleSearchSubmit}>
+                <div className="relative">
+                  <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                  <Input
+                    type="search"
+                    placeholder="Search crops..."
+                    className="pl-9"
+                    value={searchQuery}
+                    onChange={handleSearchChange}
+                    onFocus={() => searchQuery && setShowSearchResults(true)}
+                  />
+                </div>
+              </form>
+
+              {showSearchResults && filteredCrops.length > 0 && (
+                <div className="mt-2 bg-white border border-border rounded-lg shadow-lg max-h-60 overflow-y-auto">
+                  {filteredCrops.map((crop) => (
+                    <Link
+                      key={crop.id}
+                      href={`/crops/${crop.id}`}
+                      className="flex items-center gap-3 px-4 py-3 hover:bg-muted transition-colors border-b border-border last:border-b-0"
+                      onClick={() => {
+                        setShowSearchResults(false)
+                        setSearchQuery("")
+                        setIsMenuOpen(false)
+                      }}
+                    >
+                      <img
+                        src={crop.image}
+                        alt={crop.name}
+                        className="w-8 h-8 rounded object-cover"
+                      />
+                      <div>
+                        <div className="font-medium text-sm">{crop.name}</div>
+                        <div className="text-xs text-muted-foreground">{crop.category}</div>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              )}
+
+              {showSearchResults && searchQuery && filteredCrops.length === 0 && (
+                <div className="mt-2 bg-white border border-border rounded-lg shadow-lg p-4 text-center text-sm text-muted-foreground">
+                  No crops found matching "{searchQuery}"
+                </div>
+              )}
+            </div>
             {navLinks.map((link) => (
               <Link
                 key={link.href}
@@ -122,6 +261,8 @@ export function Header() {
                   </Button>
                 </>
               ) : (
+                
+              {!loggedIn && (
                 <>
                   <Button variant="outline" asChild className="w-full">
                     <Link href="/login">
