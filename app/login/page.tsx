@@ -29,28 +29,17 @@ export default function LoginPage() {
     },
   })
 
-  const onSubmit = async (data: LoginFormData) => {
-    setError(null)
-    
-    const result = await login(data.email, data.password)
-    
-    if (result.success) {
-      router.push("/")
-    } else {
-      setError(result.error || "Login failed")
-    }
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsLoading(true)
-    // Simulate login - replace with actual auth logic
-    await new Promise((resolve) => setTimeout(resolve, 1000))
-    setIsLoading(false)
-    // mark user as logged in (placeholder for real auth)
-    try {
-      localStorage.setItem("isLoggedIn", "true")
-    } catch {} // ignore if not available
+const onSubmit = async (data: LoginFormData) => {
+  setError(null)
+  
+  const result = await login(data.email, data.password)
+  
+  if (result.success) {
     router.push("/")
-=  }
+  } else {
+    setError(result.error || "Login failed")
+  }
+}
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
